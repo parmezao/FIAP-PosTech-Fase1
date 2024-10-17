@@ -1,0 +1,34 @@
+﻿using Contatos.Web.Domain.Entities;
+using Contatos.Web.Domain.Interfaces;
+using Contatos.Web.Infrastructure.Data.Context;
+using Microsoft.EntityFrameworkCore;
+
+namespace Contatos.Web.Infrastructure.Data.Repository;
+
+public class BaseRepository<TEntity>(SqlServerContext context) 
+    : IBaseRepository<TEntity> where TEntity : BaseEntity
+{
+    protected readonly SqlServerContext _context = context;
+
+    public async Task DeleteAsync(TEntity entity)
+    {
+        _context.Set<TEntity>().Remove(entity);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task InsertAsync(TEntity entity)
+    {
+        await _context.Set<TEntity>().AddAsync(entity);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<IList<TEntity>> SelectAllAsync() => await _context.Set<TEntity>().ToListAsync();
+                  
+    public async Task<TEntity> SelectAsync(int id) => await _context.Set<TEntity>().FindAsync(id);
+    
+    public async Task UpdateAsync(TEntity entity)
+    {
+        _context.Set<TEntity>().Update(entity);
+        await _context.SaveChangesAsync();
+    }
+}
