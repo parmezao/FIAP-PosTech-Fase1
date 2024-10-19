@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Contatos.Web.Infrastructure.Data.Repository;
 
-public class BaseRepository<TEntity>(SqlServerContext context) 
+public class BaseRepository<TEntity>(SqlServerDbContext context) 
     : IBaseRepository<TEntity> where TEntity : BaseEntity
 {
-    protected readonly SqlServerContext _context = context;
+    protected readonly SqlServerDbContext _context = context;
 
-    public async Task DeleteAsync(TEntity entity)
+    public async Task DeleteAsync(int id)
     {
-        _context.Set<TEntity>().Remove(entity);
+        _context.Set<TEntity>().Remove(SelectAsync(id).Result);
         await _context.SaveChangesAsync();
     }
 

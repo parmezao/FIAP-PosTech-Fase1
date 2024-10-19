@@ -1,8 +1,17 @@
-﻿namespace Contatos.Web.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Contatos.Web.Domain.Entities;
 
 public class Contato : BaseEntity
 {
-    public string? Nome { get; set; }
-    public string? Email { get; set; }
-    public string? Telefone { get; set; }
+    [Required(ErrorMessage ="Campo Nome é obrigatório!")]
+    public string Nome { get; set; }
+
+    [Required]
+    public string Email { get; set; }
+
+    [Required]
+    public string Telefone { get; set; }
+
+    public int DDD { get; set; }
 }

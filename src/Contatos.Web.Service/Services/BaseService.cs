@@ -12,7 +12,7 @@ public class BaseService<TEntity>(IBaseRepository<TEntity> baseRepository)
     public async Task<TEntity> AddAsync<TValidator>(TEntity entity) where TValidator 
         : AbstractValidator<TEntity>
     {
-        await Validate(entity, Activator.CreateInstance<TValidator>());
+        //await Validate(entity, Activator.CreateInstance<TValidator>());
         await _baseRepository.InsertAsync(entity);
 
         return entity;
@@ -30,7 +30,7 @@ public class BaseService<TEntity>(IBaseRepository<TEntity> baseRepository)
     public async Task<TEntity> UpdateAsync<TValidator>(TEntity entity) where TValidator 
         : AbstractValidator<TEntity>
     {
-        await Validate(entity, Activator.CreateInstance<TValidator>());
+        //await Validate(entity, Activator.CreateInstance<TValidator>());
         await _baseRepository.UpdateAsync(entity);
 
         return entity;
