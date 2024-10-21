@@ -7,11 +7,12 @@ public class Contato : BaseEntity
     [Required(ErrorMessage ="Campo Nome é obrigatório!")]
     public string Nome { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Campo Email é obrigatório!")]
     public string Email { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Campo Telefone é obrigatório!")]
     public string Telefone { get; set; }
 
+    [Required(ErrorMessage = "Campo DDD é obrigatório!")]
     public int DDD { get; set; }
 }

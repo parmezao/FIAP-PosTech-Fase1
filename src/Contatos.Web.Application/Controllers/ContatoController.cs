@@ -1,6 +1,5 @@
 ﻿using Contatos.Web.Domain.Entities;
 using Contatos.Web.Domain.Interfaces;
-using Contatos.Web.Service.Validators;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Contatos.Web.Application.Controllers;
@@ -17,25 +16,46 @@ public class ContatoController(IBaseService<Contato> baseService) : ControllerBa
         if (contato == null)
             return await Task.FromResult(NotFound());
 
-        return await ExecuteAsync(() => _baseService.AddAsync<ContatoValidator>(contato));
+        var result = await _baseService.AddAsync(contato);
+        return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        return await ExecuteAsync(() => _baseService.GetAllAsync().Result);
+        var contatos = await _baseService.GetAllAsync();
+        if (contatos == null)
+            return NotFound();
+
+        return Ok(contatos);
+    }
+    
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var contato = await _baseService.GetByIdAsync(id);
+        if (contato is null)
+            return NotFound();
+
+        return Ok(contato);
     }
 
-    private async Task<IActionResult> ExecuteAsync(Func<object> func)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(int id, Contato contato)
     {
-        try
-        {
-            var result = func();
-            return await Task.FromResult(Ok(result));
-        }
-        catch (Exception ex)
-        {
-            return await Task.FromResult(BadRequest(ex));
-        }
+        if (id != contato.Id)
+            return BadRequest();
+
+        var contatoExistente = await _baseService.GetByIdAsync(id);
+        if (contatoExistente is null)
+            return NotFound();
+
+        contatoExistente.Nome = contato.Nome;
+        contatoExistente.Email = contato.Email;
+        contatoExistente.Telefone = contato.Telefone;
+        contatoExistente.DDD = contato.DDD;
+
+        await _baseService.UpdateAsync(contatoExistente);
+        return NoContent();
     }
 }

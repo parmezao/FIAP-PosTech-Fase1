@@ -1,29 +1,33 @@
 using Contatos.Web.Application.Extensions;
-using Contatos.Web.Domain.Entities;
-using Contatos.Web.Domain.Interfaces;
-using Contatos.Web.Infrastructure.Data.Context;
-using Contatos.Web.Infrastructure.Data.Repository;
-using Contatos.Web.Service.Services;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+#region Configura serviço de Controllers
 builder.Services.AddControllers();
+builder.Services.Configure<RouteOptions>(options =>
+{
+    options.LowercaseQueryStrings = options.LowercaseUrls = true;
+});
+#endregion
 
-builder.Services.AddScoped<IBaseRepository<Contato>, BaseRepository<Contato>>();
-builder.Services.AddScoped<IBaseService<Contato>, BaseService<Contato>>();
+#region Adiciona os Serviços
+builder.Services.AddServices();
+#endregion
 
-builder.Services.AddDbContext<SqlServerDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+#region Adiciona a Conexão
+builder.Services.AddDbConnection(builder);
+#endregion
 
-
+#region Adiciona a documentação (Swagger)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+#endregion
 
 var app = builder.Build();
 
+#region Aplica as Migrações (Migrations)
 app.ApplyMigrations();
+#endregion
 
 
 // Configure the HTTP request pipeline.
@@ -34,9 +38,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
