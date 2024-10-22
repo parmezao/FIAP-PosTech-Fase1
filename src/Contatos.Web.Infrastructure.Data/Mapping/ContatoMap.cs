@@ -17,11 +17,19 @@ public class ContatoMap : IEntityTypeConfiguration<Contato>
             .HasColumnName("Nome")
             .HasColumnType("varchar(100)");
 
-        builder.Property(x => x.Email)
-                        .IsRequired()
-                        .HasColumnName("Email")
-                        .HasColumnType("varchar(80)");
+        //builder.Property(x => x.Email)
+        //                .IsRequired()
+        //                .HasColumnName("Email")
+        //                .HasColumnType("varchar(80)");
 
+        builder.OwnsOne(x => x.Email, a =>
+        {
+            a.Property(p => p.Endereco)
+                .IsRequired()
+                .HasColumnName("Email")
+                .HasColumnType("varchar(60)");
+        });
+                          
         builder.Property(x => x.Telefone)
                         .IsRequired()
                         .HasColumnName("Telefone")

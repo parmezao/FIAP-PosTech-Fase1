@@ -1,6 +1,6 @@
-﻿using Contatos.Web.Infrastructure.CrossCutting.Attributes;
+﻿using Contatos.Web.Domain.ValueObjects;
+using Contatos.Web.Infrastructure.CrossCutting.Attributes;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
 
 namespace Contatos.Web.Domain.Entities;
 
@@ -10,8 +10,8 @@ public class Contato : BaseEntity
     public string? Nome { get; set; }
 
     [Required(ErrorMessage = "Campo Email é obrigatório!")]
-    [EmailAddress(ErrorMessage ="Email inválido!")]
-    public string? Email { get; set; }
+    //[EmailAddress(ErrorMessage ="Email inválido!")]
+    public Email Email { get; set; }
 
     [Required(ErrorMessage = "Campo Telefone é obrigatório!")]
     [TelefoneValido(ErrorMessage ="Telefone inválido!")]
