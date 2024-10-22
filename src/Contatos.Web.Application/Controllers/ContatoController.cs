@@ -29,7 +29,7 @@ public class ContatoController(IBaseService<Contato> baseService) : ControllerBa
 
         return Ok(contatos);
     }
-    
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
@@ -38,6 +38,18 @@ public class ContatoController(IBaseService<Contato> baseService) : ControllerBa
             return NotFound();
 
         return Ok(contato);
+    }
+
+    [HttpGet, Route("ddd/{ddd}")]
+    public async Task<IActionResult> GetByDDD(int ddd)
+    {
+        var contatos = await _baseService.GetAllAsync();
+        var contatosDDD = contatos.ToList().Where(c => c.DDD == ddd);
+
+        if (!contatosDDD.Any())
+            return NotFound();
+
+        return Ok(contatosDDD);
     }
 
     [HttpPut("{id}")]
@@ -50,12 +62,21 @@ public class ContatoController(IBaseService<Contato> baseService) : ControllerBa
         if (contatoExistente is null)
             return NotFound();
 
-        contatoExistente.Nome = contato.Nome;
-        contatoExistente.Email = contato.Email;
-        contatoExistente.Telefone = contato.Telefone;
-        contatoExistente.DDD = contato.DDD;
-
+        contatoExistente.ChangeData(contato);
         await _baseService.UpdateAsync(contatoExistente);
+        
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var contatoExistente = await _baseService.GetByIdAsync(id);
+        if (contatoExistente is null)
+            return NotFound();
+
+        await _baseService.DeleteAsync(contatoExistente.Id);
+
         return NoContent();
     }
 }

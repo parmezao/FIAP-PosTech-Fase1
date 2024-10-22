@@ -1,5 +1,6 @@
 ﻿using Contatos.Web.Infrastructure.CrossCutting.Attributes;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 
 namespace Contatos.Web.Domain.Entities;
 
@@ -17,7 +18,16 @@ public class Contato : BaseEntity
     public string? Telefone { get; set; }
 
     [Required(ErrorMessage = "Campo DDD é obrigatório!")]
+    [DDDValido(ErrorMessage ="DDD Inválido!")]
     public int DDD { get; set; }
+
+    public void ChangeData(Contato contato)
+    {
+        Nome = contato.Nome;
+        Email = contato.Email;
+        Telefone = contato.Telefone;
+        DDD = contato.DDD;
+    }
 }
 
 

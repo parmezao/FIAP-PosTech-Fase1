@@ -25,7 +25,7 @@ public class BaseRepository<TEntity>(SqlServerDbContext context)
     public async Task<IList<TEntity>> SelectAllAsync() => await _context.Set<TEntity>().ToListAsync();
                   
     public async Task<TEntity> SelectAsync(int id) => await _context.Set<TEntity>().FindAsync(id);
-    
+
     public async Task UpdateAsync(TEntity entity)
     {
         _context.Set<TEntity>().Update(entity);

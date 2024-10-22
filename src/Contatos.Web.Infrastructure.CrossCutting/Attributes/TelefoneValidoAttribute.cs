@@ -19,10 +19,10 @@ namespace Contatos.Web.Infrastructure.CrossCutting.Attributes
 
             return value is string valueAsString &&
                 (valueAsString.ToString().Length <= 9 &&
-                MyRegex().IsMatch(value.ToString() ?? string.Empty));
+                TelefoneRegex().IsMatch(value.ToString() ?? string.Empty));
         }
 
         [GeneratedRegex("^[0-9]*$")]
-        private static partial Regex MyRegex();
+        private static partial Regex TelefoneRegex();
     }
 }
