@@ -46,7 +46,7 @@ public class ContatoController(IBaseService<Contato> baseService) : ControllerBa
         var contatos = await _baseService.GetAllAsync();
         var contatosDDD = contatos.ToList().Where(c => c.DDD == ddd);
 
-        if (!contatosDDD.Any())
+        if (contatosDDD is null)
             return NotFound();
 
         return Ok(contatosDDD);

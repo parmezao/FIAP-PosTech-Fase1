@@ -15,15 +15,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{26A6494D-B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrossCutting", "CrossCutting", "{177CE7D3-122B-4FEA-8DCF-4CF4D0369D3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contatos.Web.Application", "Contatos.Web.Application\Contatos.Web.Application.csproj", "{57318F59-C91F-4F58-9CDC-E01F74D54CD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contatos.Web.Application", "Contatos.Web.Application\Contatos.Web.Application.csproj", "{57318F59-C91F-4F58-9CDC-E01F74D54CD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contatos.Web.Domain", "Contatos.Web.Domain\Contatos.Web.Domain.csproj", "{B06F5C7B-F32F-415B-B055-CEF431ECB48D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contatos.Web.Domain", "Contatos.Web.Domain\Contatos.Web.Domain.csproj", "{B06F5C7B-F32F-415B-B055-CEF431ECB48D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contatos.Web.Service", "Contatos.Web.Service\Contatos.Web.Service.csproj", "{F9388182-0A1B-4695-8C13-BD4697E0CCDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contatos.Web.Service", "Contatos.Web.Service\Contatos.Web.Service.csproj", "{F9388182-0A1B-4695-8C13-BD4697E0CCDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contatos.Web.Infrastructure.CrossCutting", "Contatos.Web.Infrastructure.CrossCutting\Contatos.Web.Infrastructure.CrossCutting.csproj", "{3D74A8E8-F1B9-48C9-B037-A3A07B9B94BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contatos.Web.Infrastructure.CrossCutting", "Contatos.Web.Infrastructure.CrossCutting\Contatos.Web.Infrastructure.CrossCutting.csproj", "{3D74A8E8-F1B9-48C9-B037-A3A07B9B94BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contatos.Web.Infrastructure.Data", "Contatos.Web.Infrastructure.Data\Contatos.Web.Infrastructure.Data.csproj", "{1CFC78C2-362B-4199-BBE7-E1A4A6FBD8DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contatos.Web.Infrastructure.Data", "Contatos.Web.Infrastructure.Data\Contatos.Web.Infrastructure.Data.csproj", "{1CFC78C2-362B-4199-BBE7-E1A4A6FBD8DD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{B7DECE93-F616-409D-A6BC-4D3A89082825}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contatos.Web.Test", "Contatos.Web.Test\Contatos.Web.Test.csproj", "{0328FD66-E2F2-4271-8F41-68E70F8B25B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +55,10 @@ Global
 		{1CFC78C2-362B-4199-BBE7-E1A4A6FBD8DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CFC78C2-362B-4199-BBE7-E1A4A6FBD8DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CFC78C2-362B-4199-BBE7-E1A4A6FBD8DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0328FD66-E2F2-4271-8F41-68E70F8B25B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0328FD66-E2F2-4271-8F41-68E70F8B25B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0328FD66-E2F2-4271-8F41-68E70F8B25B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0328FD66-E2F2-4271-8F41-68E70F8B25B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +71,7 @@ Global
 		{F9388182-0A1B-4695-8C13-BD4697E0CCDE} = {978F7B25-6796-4189-9E40-0C8D035E6F6C}
 		{3D74A8E8-F1B9-48C9-B037-A3A07B9B94BF} = {177CE7D3-122B-4FEA-8DCF-4CF4D0369D3C}
 		{1CFC78C2-362B-4199-BBE7-E1A4A6FBD8DD} = {26A6494D-B25A-474D-991D-4A01A1F8E5F9}
+		{0328FD66-E2F2-4271-8F41-68E70F8B25B0} = {B7DECE93-F616-409D-A6BC-4D3A89082825}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F6366B91-4EC1-4F65-B213-395DA5DC90DE}
