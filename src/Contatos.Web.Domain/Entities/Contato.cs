@@ -23,9 +23,10 @@ public class Contato : BaseEntity
     [DDDValido(ErrorMessage ="DDD Inválido!")]
     public int DDD { get; set; }
 
-    public void ChangeEmail(Email email)
+    public bool ChangeEmail(Email email)
     {
         Email = email;
+        return Email.Equals(email);
     }
 
     public void ChangeData(Contato contato)

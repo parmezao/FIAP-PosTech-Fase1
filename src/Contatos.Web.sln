@@ -25,9 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contatos.Web.Infrastructure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contatos.Web.Infrastructure.Data", "Contatos.Web.Infrastructure.Data\Contatos.Web.Infrastructure.Data.csproj", "{1CFC78C2-362B-4199-BBE7-E1A4A6FBD8DD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{B7DECE93-F616-409D-A6BC-4D3A89082825}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B7DECE93-F616-409D-A6BC-4D3A89082825}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contatos.Web.Test", "Contatos.Web.Test\Contatos.Web.Test.csproj", "{0328FD66-E2F2-4271-8F41-68E70F8B25B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contatos.Web.Tests", "Contatos.Web.Test\Contatos.Web.Tests.csproj", "{0328FD66-E2F2-4271-8F41-68E70F8B25B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
