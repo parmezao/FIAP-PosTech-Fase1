@@ -1,4 +1,5 @@
 using Contatos.Web.Application.Extensions;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,11 @@ builder.Services.AddDbConnection(builder);
 
 #region Adiciona a documentação (Swagger)
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
+});
 #endregion
 
 var app = builder.Build();

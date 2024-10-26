@@ -10,6 +10,11 @@ public class ContatoController(IBaseService<Contato> baseService) : ControllerBa
 {
     private readonly IBaseService<Contato> _baseService = baseService;
 
+    /// <summary>
+    /// Endpoint utilizado para cadastrar um novo Contato
+    /// </summary>
+    /// <param name="contato">Objeto Contato. Necessário informar o Nome, Endereço de Email, Telefone e DDD do Contato para o cadastro</param>
+    /// <returns>Retorna o objeto Contato informado com o Id preenchido</returns>
     [HttpPost]
     public async Task<IActionResult> Create(Contato contato)
     {
@@ -20,6 +25,10 @@ public class ContatoController(IBaseService<Contato> baseService) : ControllerBa
         return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
     }
 
+    /// <summary>
+    /// Endpoint utilizado listar todos os Contatos cadastrados
+    /// </summary>
+    /// <returns>Retorna a lista de objetos do tipo Contato</returns>
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {

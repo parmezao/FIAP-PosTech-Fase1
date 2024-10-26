@@ -6,14 +6,10 @@ namespace Contatos.Web.Domain.Entities;
 
 public class Contato : BaseEntity
 {
-    public Contato() {}
-
     [Required(ErrorMessage ="Campo Nome é obrigatório!")]
     public string? Nome { get; set; }
 
-    [Required(ErrorMessage = "Campo Email é obrigatório!")]
-    [EmailAddress(ErrorMessage ="Email inválido!")]
-    public Email Email { get; set; }
+    public Email Email { get; set; } = new Email(string.Empty);
 
     [Required(ErrorMessage = "Campo Telefone é obrigatório!")]
     [TelefoneValido(ErrorMessage ="Telefone inválido!")]
@@ -22,12 +18,6 @@ public class Contato : BaseEntity
     [Required(ErrorMessage = "Campo DDD é obrigatório!")]
     [DDDValido(ErrorMessage ="DDD Inválido!")]
     public int DDD { get; set; }
-
-    public bool ChangeEmail(Email email)
-    {
-        Email = email;
-        return Email.Equals(email);
-    }
 
     public void ChangeData(Contato contato)
     {

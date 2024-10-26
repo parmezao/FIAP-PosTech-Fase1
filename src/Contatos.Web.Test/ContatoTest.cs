@@ -52,23 +52,6 @@ public class ContatoTest
         // Assert
         Assert.Equal(valorEsperado, valorAtual);
     }
-
-    [Fact(DisplayName = "Deve passar se o email for alterado com sucesso")]
-    public void Deve_passar_se_o_email_for_alterado_com_sucesso()
-    {
-        const string novo_endereco_email = "novo@email.com";
-
-        // Arrange
-        string valorEsperado = novo_endereco_email;
-
-        // Act
-        var contato = new Contato();
-        contato.ChangeEmail(new Email(novo_endereco_email));
-        string valorAtual = contato.Email.Endereco;
-
-        // Assert
-        Assert.Equal(valorEsperado, valorAtual);
-    }
     #endregion
 
     #region Propriedade "Telefone"
