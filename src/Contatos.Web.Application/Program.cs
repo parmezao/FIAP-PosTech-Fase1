@@ -1,10 +1,20 @@
 using Contatos.Web.Application.Extensions;
+using Contatos.Web.Service.Validators;
+using System.Net.Mime;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 #region Configura serviço de Controllers
-builder.Services.AddControllers();
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var result = new ValidationFailedResult(context.ModelState);
+        return result;
+    };
+});
+
 builder.Services.Configure<RouteOptions>(options =>
 {
     options.LowercaseQueryStrings = options.LowercaseUrls = true;

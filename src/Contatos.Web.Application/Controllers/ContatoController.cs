@@ -1,5 +1,6 @@
 ﻿using Contatos.Web.Domain.Entities;
 using Contatos.Web.Domain.Interfaces;
+using Contatos.Web.Service.Validators;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Contatos.Web.Application.Controllers;
@@ -16,60 +17,88 @@ public class ContatoController(IBaseService<Contato> baseService) : ControllerBa
     /// <param name="contato">Objeto Contato. Necessário informar o Nome, Endereço de Email, Telefone e DDD do Contato para o cadastro</param>
     /// <returns>Retorna o objeto Contato informado com o Id preenchido</returns>
     [HttpPost]
-    public async Task<IActionResult> Create(Contato contato)
+    [ValidateModel]
+    public async Task<ActionResult<ResponseModel>> Create(Contato contato)
     {
+        var responseModel = new ResponseModel();
+
         if (contato == null)
-            return await Task.FromResult(NotFound());
+            return NotFound(responseModel.Result(StatusCodes.Status404NotFound, "Não Encontrado", contato));
 
         var result = await _baseService.AddAsync(contato);
-        return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+        return CreatedAtAction(nameof(GetById), new { id = result.Id }, 
+            responseModel.Result(StatusCodes.Status201Created, "Created", result));
     }
 
     /// <summary>
-    /// Endpoint utilizado listar todos os Contatos cadastrados
+    /// Endpoint utilizado para listar todos os Contatos cadastrados
     /// </summary>
     /// <returns>Retorna a lista de objetos do tipo Contato</returns>
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<ActionResult<ResponseModel>> GetAll()
     {
-        var contatos = await _baseService.GetAllAsync();
-        if (contatos == null)
-            return NotFound();
+        var responseModel = new ResponseModel();
 
-        return Ok(contatos);
+        var contatos = await _baseService.GetAllAsync();
+        if (contatos is null)
+            return NotFound(responseModel.Result(StatusCodes.Status404NotFound, "Não encontrado", contatos));
+
+        return Ok(responseModel.Result(StatusCodes.Status200OK, "OK", contatos));
     }
 
+    /// <summary>
+    /// Endpoint utilizado para localizar o Contato de acordo com o Id informado
+    /// </summary>
+    /// <param name="id">Id do objeto Contato. Necessário informar para localizar o Contato</param>
+    /// <returns>Retorna o objeto do tipo Contato</returns>
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(int id)
+    public async Task<ActionResult<ResponseModel>> GetById(int id)
     {
+        var responseModel = new ResponseModel();
+
         var contato = await _baseService.GetByIdAsync(id);
         if (contato is null)
-            return NotFound();
+            return NotFound(responseModel.Result(StatusCodes.Status404NotFound, "Não encontrado", contato));
 
-        return Ok(contato);
+        return Ok(responseModel.Result(StatusCodes.Status200OK, "OK", contato));
     }
 
+    /// <summary>
+    /// Endpoint utilizado para localizar o Contato de acordo com o DDD informado
+    /// </summary>
+    /// <param name="ddd">DDD do objeto Contato. Necessário informar para localizar o Contato</param>
+    /// <returns>Retorna o objeto do tipo Contato</returns>
     [HttpGet, Route("ddd/{ddd}")]
-    public async Task<IActionResult> GetByDDD(int ddd)
+    public async Task<ActionResult<ResponseModel>> GetByDDD(int ddd)
     {
+        var responseModel = new ResponseModel();
+
         var contatos = await _baseService.GetAllAsync();
         var contatosDDD = contatos.ToList().Where(c => c.DDD == ddd);
 
         if (contatosDDD is null)
-            return NotFound();
+            return NotFound(responseModel.Result(StatusCodes.Status404NotFound, "Não encontrado", contatosDDD));
 
-        return Ok(contatosDDD);
+        return Ok(responseModel.Result(StatusCodes.Status200OK, "OK", contatosDDD));
     }
 
+    /// <summary>
+    /// Endpoint utilizado para alterar um Contato existente
+    /// </summary>
+    /// <param name="id">Id do objeto Contato. Necessário informar para localizar o Contato que será alterado</param>
+    /// <param name="contato">Objeto Contato. Necessário informar para aplicar as alterações no Contato que será alterado</param>
+    /// <returns>Retorna o objeto Contato informado com o Id preenchido</returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, Contato contato)
+    public async Task<ActionResult<ResponseModel>> Update(int id, Contato contato)
     {
+        var responseModel = new ResponseModel();
+
         if (id != contato.Id)
-            return BadRequest();
+            return BadRequest(responseModel.Result(StatusCodes.Status400BadRequest, "Erro na Requisição", contato));
 
         var contatoExistente = await _baseService.GetByIdAsync(id);
         if (contatoExistente is null)
-            return NotFound();
+            return NotFound(responseModel.Result(StatusCodes.Status404NotFound, "Não encontrado", contatoExistente));
 
         contatoExistente.ChangeData(contato);
         await _baseService.UpdateAsync(contatoExistente);
@@ -77,12 +106,19 @@ public class ContatoController(IBaseService<Contato> baseService) : ControllerBa
         return NoContent();
     }
 
+    /// <summary>
+    /// Endpoint utilizado para excluir o Contato de acordo com o Id informado
+    /// </summary>
+    /// <param name="id">Id do objeto Contato. Necessário informar para localizar o Contato que será excluído</param>
+    /// <returns>Retorna o objeto do tipo Contato</returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
+        var responseModel = new ResponseModel();
+
         var contatoExistente = await _baseService.GetByIdAsync(id);
         if (contatoExistente is null)
-            return NotFound();
+            return NotFound(responseModel.Result(StatusCodes.Status404NotFound, "Não encontrado", contatoExistente));
 
         await _baseService.DeleteAsync(contatoExistente.Id);
 

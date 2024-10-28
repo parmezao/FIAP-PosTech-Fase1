@@ -37,6 +37,25 @@ public class ContatoTest
         Assert.Equal(valorEsperado, valorAtual);
     }
 
+    [Fact(DisplayName = "Deve falhar quando nome ultrapassar limite de caracteres")]
+    public void Deve_falhar_quando_nome_ultrapassar_limite_de_caracteres()
+    {
+        const bool nome_maior_que_100 = true;
+
+        // Arrange
+        bool valorEsperado = nome_maior_que_100;
+
+        // Act
+        Contato contato = new();
+        contato.Nome = "ndflhweifosndflsjdhnvchoehowijedfhoidhfoiwjhofoifhoifhwoihfeo" +
+            "hasjfhjfgkjhrlpfjsdfjsdfsfsdfdfdhfcnohurhife";
+
+        bool valorAtual = contato.Nome?.Length > 100;
+
+        // Assert
+        Assert.Equal(valorEsperado, valorAtual);
+    }
+
     [Fact(DisplayName = "Deve passar quando nome estiver preenchido")]
     public void Deve_passar_quando_nome_estiver_preenchido()
     {
@@ -52,6 +71,28 @@ public class ContatoTest
         // Assert
         Assert.Equal(valorEsperado, valorAtual);
     }
+    #endregion
+
+    #region Propriedade "Email - campo Endereço"
+    [Fact(DisplayName = "Deve falhar quando email ultrapassar limite de caracteres")]
+    public void Deve_falhar_quando_email_ultrapassar_limite_de_caracteres()
+    {
+        const bool endereco_maior_que_100 = true;
+
+        // Arrange
+        bool valorEsperado = endereco_maior_que_100;
+
+        // Act
+        Contato contato = new();
+        contato.Email.Endereco = "ndflhweifosndflsjdhnvchoehowijedfhoidhfoiwjhofoifhoifhwoihfeo" +
+            "hasjfhjfgkjhrlpfjsdfjsdfsfsdfdfdhfcnohurhife";
+
+        bool valorAtual = contato.Email.Endereco.Length > 100;
+
+        // Assert
+        Assert.Equal(valorEsperado, valorAtual);
+    }
+
     #endregion
 
     #region Propriedade "Telefone"
