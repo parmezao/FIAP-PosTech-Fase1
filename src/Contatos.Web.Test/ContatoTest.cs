@@ -73,7 +73,7 @@ public class ContatoTest
     }
     #endregion
 
-    #region Propriedade "Email - campo Endereço"
+    #region Propriedade "Email - campo EndereÃ§o"
     [Fact(DisplayName = "Deve falhar quando email ultrapassar limite de caracteres")]
     public void Deve_falhar_quando_email_ultrapassar_limite_de_caracteres()
     {
@@ -97,16 +97,16 @@ public class ContatoTest
 
     #region Propriedade "Telefone"
     [Fact]
-    public void Deve_falhar_se_telefone_tiver_mais_de_9_caracteres()
+    public void Deve_falhar_se_telefone_tiver_mais_de_10_caracteres()
     {        
-        const string TELEFONE_MAIOR_QUE_9_CARACTERES = "9888877660";
+        const string TELEFONE_MAIOR_QUE_10_CARACTERES = "98888776600";
 
         // Arrange
-        const int LIMITE_MAXIMO_CARACTERES = 9;
+        const int LIMITE_MAXIMO_CARACTERES = 10;
 
         // Act
         var contato = new Contato();
-        contato.Telefone = TELEFONE_MAIOR_QUE_9_CARACTERES;
+        contato.Telefone = TELEFONE_MAIOR_QUE_10_CARACTERES;
         int valorAtual = contato.Telefone.Length;
 
         // Assert

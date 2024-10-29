@@ -1,10 +1,11 @@
-﻿using Contatos.Web.Domain.Entities;
+﻿using System.Reflection;
+using Contatos.Web.Domain.Entities;
 using Contatos.Web.Domain.Interfaces;
 using Contatos.Web.Infrastructure.Data.Context;
 using Contatos.Web.Infrastructure.Data.Repository;
 using Contatos.Web.Service.Services;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
+using Microsoft.OpenApi.Models;
 
 namespace Contatos.Web.Application.Extensions
 {
@@ -29,7 +30,18 @@ namespace Contatos.Web.Application.Extensions
         public static IServiceCollection AddDocs(this IServiceCollection services)
         {
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(options =>
+            {
+                var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
+                
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Contatos",
+                    Description = "API de Contatos Regionais - FIAP Fase 1"
+                });
+            });            
 
             return services;
         }
