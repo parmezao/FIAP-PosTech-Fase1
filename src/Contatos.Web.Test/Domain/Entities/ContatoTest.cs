@@ -1,8 +1,7 @@
 using Contatos.Web.Domain.Entities;
-using Contatos.Web.Domain.ValueObjects;
 using System.Text.RegularExpressions;
 
-namespace Contatos.Web.Tests;
+namespace Contatos.Web.Tests.Domain.Entities;
 
 public class ContatoTest
 {

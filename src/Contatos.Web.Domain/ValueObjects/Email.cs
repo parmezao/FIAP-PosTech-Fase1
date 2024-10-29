@@ -10,9 +10,9 @@ public class Email(string endereco)
     [MaxLength(60, ErrorMessage ="Limite máximo atingido! Máximo de 60 caracteres")]
     public string Endereco { get; set; } = endereco;
 
-    public bool ChangeEmail(Email email)
+    public bool ChangeEmail(string email)
     {
-        Endereco = email.Endereco;
-        return Endereco.Equals(email.Endereco);
+        Endereco = email;
+        return Endereco.Equals(email);
     }
 }
