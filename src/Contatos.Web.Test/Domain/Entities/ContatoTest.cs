@@ -6,66 +6,70 @@ namespace Contatos.Web.Tests.Domain.Entities;
 public class ContatoTest
 {
     #region Propriedade "Nome"
-    [Fact(DisplayName = "Deve falhar quando nome for nulo")]
-    public void Deve_falhar_quando_nome_for_nulo()
+    [Fact(DisplayName = "Nome Deve falhar quando for nulo")]
+    [Trait("Category", "Nome")]
+    public void Nome_DeveFalhar_QuandoForNulo()
     {
         // Arrange        
-        string valorEsperado = null;
+        string? valorEsperado = null;
 
         // Act
         var contato = new Contato();
+        string? valorAtual = contato.Nome;
+
+        // Assert
+        Assert.Equal(valorEsperado, valorAtual);
+    }
+
+    [Fact(DisplayName = "Nome Deve Falhar Quando Estiver Em Branco")]
+    [Trait("Category", "Nome")]
+    public void Nome_DeveFalhar_QuandoEstiverEmBranco()
+    {
+        const string nomeVazio = "";
+
+        // Arrange
+        string valorEsperado = nomeVazio;
+
+        // Act
+        Contato contato = new() { Nome = nomeVazio };
         string valorAtual = contato.Nome;
 
         // Assert
         Assert.Equal(valorEsperado, valorAtual);
     }
 
-    [Fact(DisplayName = "Deve falhar quando nome estiver em branco")]
-    public void Deve_falhar_quando_nome_estiver_em_branco()
+    [Fact(DisplayName = "Nome Deve Falhar Quando Ultrapassar Limite De Caracteres")]
+    [Trait("Category", "Nome")]
+    public void Nome_DeveFalhar_QuandoUltrapassarLimiteDeCaracteres()
     {
-        const string nome_vazio = "";
+        const string nomeMaiorQue100 = "ndflhweifosndflsjdhnvchoehowijedfhoidhfoiwjhofoifhoifhwoihfeohasjfhjfgkjhrlpf" +
+                                       "jsdfjsdfsfsdfdfdhfcnohurhife";
 
         // Arrange
-        string valorEsperado = nome_vazio;
+        var valorEsperado = nomeMaiorQue100.Length > 100;
 
         // Act
-        Contato contato = new() { Nome = nome_vazio };
-        string valorAtual = contato.Nome;
+        var contato = new Contato();
+        contato.Nome = nomeMaiorQue100;
+
+        var valorAtual = contato.Nome?.Length > 100;
 
         // Assert
         Assert.Equal(valorEsperado, valorAtual);
     }
 
-    [Fact(DisplayName = "Deve falhar quando nome ultrapassar limite de caracteres")]
-    public void Deve_falhar_quando_nome_ultrapassar_limite_de_caracteres()
+    [Fact(DisplayName = "Nome Deve Passar Quando Estiver Preenchido")]
+    [Trait("Category", "Nome")]
+    public void Nome_DevePassar_QuandoEstiverPreenchido()
     {
-        const bool nome_maior_que_100 = true;
+        const string nomeContato = "Nome_Contato";
 
         // Arrange
-        bool valorEsperado = nome_maior_que_100;
+        var valorEsperado = nomeContato;
 
         // Act
-        Contato contato = new();
-        contato.Nome = "ndflhweifosndflsjdhnvchoehowijedfhoidhfoiwjhofoifhoifhwoihfeo" +
-            "hasjfhjfgkjhrlpfjsdfjsdfsfsdfdfdhfcnohurhife";
-
-        bool valorAtual = contato.Nome?.Length > 100;
-
-        // Assert
-        Assert.Equal(valorEsperado, valorAtual);
-    }
-
-    [Fact(DisplayName = "Deve passar quando nome estiver preenchido")]
-    public void Deve_passar_quando_nome_estiver_preenchido()
-    {
-        const string nome_contato = "Nome_Contato";
-
-        // Arrange
-        string valorEsperado = nome_contato;
-
-        // Act
-        var contato = new Contato() { Nome = nome_contato };
-        string valorAtual = contato.Nome;
+        var contato = new Contato() { Nome = nomeContato };
+        var valorAtual = contato.Nome;
 
         // Assert
         Assert.Equal(valorEsperado, valorAtual);
@@ -73,18 +77,19 @@ public class ContatoTest
     #endregion
 
     #region Propriedade "Email - campo Endereço"
-    [Fact(DisplayName = "Deve falhar quando email ultrapassar limite de caracteres")]
-    public void Deve_falhar_quando_email_ultrapassar_limite_de_caracteres()
+    [Fact(DisplayName = "Email Deve Falhar Quando Ultrapassar Limite De Caracteres")]
+    [Trait("Category", "Email")]
+    public void Email_DeveFalhar_QuandoUltrapassarLimiteDeCaracteres()
     {
-        const bool endereco_maior_que_100 = true;
+        const string enderecoMaiorQue100 = "ndflhweifosndflsjdhnvchoehowijedfhoidhfoiwjhofoifhoifhwoihfeo" +
+                                           "hasjfhjfgkjhrlpfjsdfjsdfsfsdfdfdhfcnohurhife";
 
         // Arrange
-        bool valorEsperado = endereco_maior_que_100;
+        var valorEsperado = enderecoMaiorQue100.Length > 100;
 
         // Act
         Contato contato = new();
-        contato.Email.Endereco = "ndflhweifosndflsjdhnvchoehowijedfhoidhfoiwjhofoifhoifhwoihfeo" +
-            "hasjfhjfgkjhrlpfjsdfjsdfsfsdfdfdhfcnohurhife";
+        contato.Email.Endereco = enderecoMaiorQue100;
 
         bool valorAtual = contato.Email.Endereco.Length > 100;
 
@@ -95,65 +100,67 @@ public class ContatoTest
     #endregion
 
     #region Propriedade "Telefone"
-    [Fact]
-    public void Deve_falhar_se_telefone_tiver_mais_de_10_caracteres()
+    [Fact(DisplayName = "Telefone Deve Falhar Se Tiver Mais De 10 Caracteres")]
+    [Trait("Category", "Telefone")]
+    public void Telefone_DeveFalhar_SeTiverMaisDe10Caracteres()
     {        
-        const string TELEFONE_MAIOR_QUE_10_CARACTERES = "98888776600";
+        const string telefoneMaiorQue10Caracteres = "98888776600";
 
         // Arrange
-        const int LIMITE_MAXIMO_CARACTERES = 10;
+        const int limiteMaximoCaracteres = 10;
 
         // Act
         var contato = new Contato();
-        contato.Telefone = TELEFONE_MAIOR_QUE_10_CARACTERES;
-        int valorAtual = contato.Telefone.Length;
+        contato.Telefone = telefoneMaiorQue10Caracteres;
+        var valorAtual = contato.Telefone.Length;
 
         // Assert
-        Assert.True(valorAtual > LIMITE_MAXIMO_CARACTERES);
+        Assert.True(valorAtual > limiteMaximoCaracteres);
     }
 
-    [Fact(DisplayName = "Deve falhar quando telefone for nulo")]
-    public void Deve_falhar_quando_telefone_for_nulo()
+    [Fact(DisplayName = "Telefone Deve Falhar Quando For Nulo")]
+    [Trait("Category", "Telefone")]
+    public void Telefone_DeveFalhar_QuandoForNulo()
     {
         // Arrange        
-        string valorEsperado = null;
+        string? valorEsperado = null;
 
         // Act
         var contato = new Contato();
+        var valorAtual = contato.Telefone;
+
+        // Assert
+        Assert.Equal(valorEsperado, valorAtual);
+    }
+
+    [Fact(DisplayName = "Telefone Deve Falhar Quando Estiver Em Branco")]
+    [Trait("Category", "Telefone")]
+    public void Telefone_DeveFalhar_QuandoEstiverEmBranco()
+    {
+        string telefoneVazio = string.Empty;
+
+        // Arrange
+        var valorEsperado = telefoneVazio;
+
+        // Act
+        Contato contato = new() { Telefone = telefoneVazio };
         string valorAtual = contato.Telefone;
 
         // Assert
         Assert.Equal(valorEsperado, valorAtual);
     }
 
-    [Fact(DisplayName = "Deve falhar quando telefone estiver em branco")]
-    public void Deve_falhar_quando_telefone_estiver_em_branco()
+    [Fact(DisplayName = "Telefone Deve Falhar Quando Possuir Algum Caractere Alfanumerico")]
+    [Trait("Category", "Telefone")]
+    public void Telefone_DeveFalhar_QuandoPossuirAlgumCaractereAlfanumerico()
     {
-        const string telefone_vazio = "";
+        const string telefoneComCaractereAlfanumerico = "9888877X6";
 
         // Arrange
-        string valorEsperado = telefone_vazio;
-
-        // Act
-        Contato contato = new() { Telefone = telefone_vazio };
-        string valorAtual = contato.Telefone;
-
-        // Assert
-        Assert.Equal(valorEsperado, valorAtual);
-    }
-
-    [Fact(DisplayName = "Deve falhar quando telefone possuir algum caractere alfanumerico")]
-    public void Deve_falhar_quando_telefone_possuir_algum_caractere_alfanumerico()
-    {
-        const string TELEFONE_COM_CARACTERE_ALFANUMERICO = "9888877X6";
-
         var contato = new Contato();
-        contato.Telefone = TELEFONE_COM_CARACTERE_ALFANUMERICO;
-
-        // Arrange
-        bool valorEsperado = !Regex.IsMatch(contato.Telefone, "^[0-9]*$");
-
-        // Act
+        contato.Telefone = telefoneComCaractereAlfanumerico;
+        
+        var valorEsperado = !Regex.IsMatch(contato.Telefone, "^[0-9]*$");
 
         // Assert
         Assert.True(valorEsperado);

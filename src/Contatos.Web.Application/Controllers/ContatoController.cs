@@ -22,9 +22,6 @@ public class ContatoController(IBaseService<Contato> baseService) : ControllerBa
     {
         var responseModel = new ResponseModel();
 
-        if (contato == null)
-            return NotFound(responseModel.Result(StatusCodes.Status404NotFound, "Não Encontrado", contato));
-
         var result = await _baseService.AddAsync(contato);
         return CreatedAtAction(nameof(GetById), new { id = result.Id }, 
             responseModel.Result(StatusCodes.Status201Created, "Created", result));
@@ -40,9 +37,6 @@ public class ContatoController(IBaseService<Contato> baseService) : ControllerBa
         var responseModel = new ResponseModel();
 
         var contatos = await _baseService.GetAllAsync();
-        if (contatos is null)
-            return NotFound(responseModel.Result(StatusCodes.Status404NotFound, "Não encontrado", contatos));
-
         return Ok(responseModel.Result(StatusCodes.Status200OK, "OK", contatos));
     }
 
@@ -74,8 +68,8 @@ public class ContatoController(IBaseService<Contato> baseService) : ControllerBa
         var responseModel = new ResponseModel();
 
         var contatos = await _baseService.GetAllAsync();
+        
         var contatosDDD = contatos.ToList().Where(c => c.DDD == ddd);
-
         if (contatosDDD is null)
             return NotFound(responseModel.Result(StatusCodes.Status404NotFound, "Não encontrado", contatosDDD));
 
@@ -100,7 +94,7 @@ public class ContatoController(IBaseService<Contato> baseService) : ControllerBa
         if (contatoExistente is null)
             return NotFound(responseModel.Result(StatusCodes.Status404NotFound, "Não encontrado", contatoExistente));
 
-        contatoExistente.ChangeData(contato);
+        contatoExistente.ChangeContatoData(contato);
         await _baseService.UpdateAsync(contatoExistente);
         
         return NoContent();
@@ -121,7 +115,6 @@ public class ContatoController(IBaseService<Contato> baseService) : ControllerBa
             return NotFound(responseModel.Result(StatusCodes.Status404NotFound, "Não encontrado", contatoExistente));
 
         await _baseService.DeleteAsync(contatoExistente.Id);
-
         return NoContent();
     }
 }

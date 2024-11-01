@@ -4,10 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Contatos.Web.Infrastructure.Data.Context
 {
-    public class SqlServerDbContext : DbContext
+    public class SqlServerDbContext(DbContextOptions<SqlServerDbContext> options) : DbContext(options)
     {
-        public SqlServerDbContext(DbContextOptions<SqlServerDbContext> options) : base(options) { }
-
         public DbSet<Contato> Contatos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

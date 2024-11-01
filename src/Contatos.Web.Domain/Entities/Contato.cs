@@ -21,7 +21,7 @@ public class Contato : BaseEntity
     [RegularExpression("^[0-9]*$", ErrorMessage = "Campo DDD aceita somente números!")]
     public int DDD { get; set; }
 
-    public void ChangeData(Contato contato)
+    public void ChangeContatoData(Contato contato)
     {
         Nome = contato.Nome;
         Email = contato.Email;

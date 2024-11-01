@@ -3,7 +3,7 @@ using Contatos.Web.Service.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region Configura serviço de Controllers
+#region Configura serviço de Controllers e Routes
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 {
     options.InvalidModelStateResponseFactory = context =>
