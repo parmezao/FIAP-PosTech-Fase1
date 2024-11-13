@@ -29,6 +29,7 @@ jobs:
     
         - name: Install dependencies
           run: dotnet restore
+          working-directory: src/Contatos.Web.sln
           
         - name: Build
           run: dotnet build --configuration Release --no-restore
