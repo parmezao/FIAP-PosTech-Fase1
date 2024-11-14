@@ -102,10 +102,8 @@ public class ContatoController(IBaseService<Contato> baseService) : ControllerBa
         var responseModel = new ResponseModel();
 
         var contatoExistente = await _baseService.GetByIdAsync(id);
-        if (contatoExistente is null)
-            return NotFound(responseModel.Result(StatusCodes.Status404NotFound, "Não encontrado", contatoExistente));
-
         await _baseService.DeleteAsync(contatoExistente.Id);
+        
         return NoContent();
     }
 }
