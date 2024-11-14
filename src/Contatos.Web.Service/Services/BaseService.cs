@@ -18,7 +18,7 @@ public class BaseService<TEntity>(IBaseRepository<TEntity> baseRepository)
 
     public async Task<IList<TEntity>> GetAllAsync() => await _baseRepository.SelectAllAsync();    
 
-    public async Task<TEntity> GetByIdAsync(int id) => await _baseRepository.SelectAsync(id);    
+    public async Task<TEntity> GetByIdAsync(int id) => (await _baseRepository.SelectAsync(id))!;    
 
     public async Task<TEntity> UpdateAsync(TEntity entity)
     {

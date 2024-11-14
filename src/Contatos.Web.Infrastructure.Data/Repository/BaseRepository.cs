@@ -12,7 +12,7 @@ public class BaseRepository<TEntity>(SqlServerDbContext context)
 
     public async Task DeleteAsync(int id)
     {
-        _context.Set<TEntity>().Remove(SelectAsync(id).Result);
+        _context.Set<TEntity>().Remove((await SelectAsync(id))!);
         await _context.SaveChangesAsync();
     }
 
@@ -24,7 +24,7 @@ public class BaseRepository<TEntity>(SqlServerDbContext context)
 
     public async Task<IList<TEntity>> SelectAllAsync() => await _context.Set<TEntity>().ToListAsync();
                   
-    public async Task<TEntity> SelectAsync(int id) => await _context.Set<TEntity>().FindAsync(id);
+    public async Task<TEntity?> SelectAsync(int id) => await _context.Set<TEntity>().FindAsync(id);
 
     public async Task UpdateAsync(TEntity entity)
     {

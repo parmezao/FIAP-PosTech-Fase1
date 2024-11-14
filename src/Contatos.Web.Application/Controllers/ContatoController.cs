@@ -51,9 +51,6 @@ public class ContatoController(IBaseService<Contato> baseService) : ControllerBa
         var responseModel = new ResponseModel();
 
         var contato = await _baseService.GetByIdAsync(id);
-        if (contato is null)
-            return NotFound(responseModel.Result(StatusCodes.Status404NotFound, "Não encontrado", contato));
-
         return Ok(responseModel.Result(StatusCodes.Status200OK, "OK", contato));
     }
 
@@ -69,11 +66,8 @@ public class ContatoController(IBaseService<Contato> baseService) : ControllerBa
 
         var contatos = await _baseService.GetAllAsync();
         
-        var contatosDDD = contatos.ToList().Where(c => c.DDD == ddd);
-        if (contatosDDD is null)
-            return NotFound(responseModel.Result(StatusCodes.Status404NotFound, "Não encontrado", contatosDDD));
-
-        return Ok(responseModel.Result(StatusCodes.Status200OK, "OK", contatosDDD));
+        var contatosDdd = contatos.ToList().Where(c => c.DDD == ddd);
+        return Ok(responseModel.Result(StatusCodes.Status200OK, "OK", contatosDdd));
     }
 
     /// <summary>
@@ -91,9 +85,6 @@ public class ContatoController(IBaseService<Contato> baseService) : ControllerBa
             return BadRequest(responseModel.Result(StatusCodes.Status400BadRequest, "Erro na Requisição", contato));
 
         var contatoExistente = await _baseService.GetByIdAsync(id);
-        if (contatoExistente is null)
-            return NotFound(responseModel.Result(StatusCodes.Status404NotFound, "Não encontrado", contatoExistente));
-
         contatoExistente.ChangeContatoData(contato);
         await _baseService.UpdateAsync(contatoExistente);
         
