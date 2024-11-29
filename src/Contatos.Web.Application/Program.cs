@@ -23,6 +23,10 @@ builder.Services.Configure<RouteOptions>(options =>
 builder.Services.AddServices();
 #endregion
 
+#region Adiciona Mapeamentos
+builder.Services.AddMapping();
+#endregion
+
 #region Adiciona a Conexão
 builder.Services.AddDbConnection(builder);
 #endregion

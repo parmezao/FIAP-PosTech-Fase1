@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -24,6 +25,7 @@
     <ProjectReference Include="..\Contatos.Web.Domain\Contatos.Web.Domain.csproj" />
     <ProjectReference Include="..\Contatos.Web.Infrastructure.Data\Contatos.Web.Infrastructure.Data.csproj" />
     <ProjectReference Include="..\Contatos.Web.Service\Contatos.Web.Service.csproj" />
+    <ProjectReference Include="..\Contatos.Web.Shared\Contatos.Web.Shared.csproj" />
   </ItemGroup>
 
 </Project>

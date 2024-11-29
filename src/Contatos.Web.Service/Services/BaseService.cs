@@ -1,5 +1,6 @@
 ﻿using Contatos.Web.Domain.Entities;
 using Contatos.Web.Domain.Interfaces;
+using FluentValidation;
 
 namespace Contatos.Web.Service.Services;
 
@@ -16,8 +17,11 @@ public class BaseService<TEntity>(IBaseRepository<TEntity> baseRepository)
 
     public async Task DeleteAsync(int id) => await _baseRepository.DeleteAsync(id);    
 
-    public async Task<IList<TEntity>> GetAllAsync() => await _baseRepository.SelectAllAsync();    
+    public async Task<IList<TEntity>> GetAllAsync() => await _baseRepository.SelectAllAsync();
 
+    public async Task<IEnumerable<TEntity>> FilterAsync(Func<TEntity, bool> predicate) =>
+        await _baseRepository.FilterAsync(predicate);
+    
     public async Task<TEntity> GetByIdAsync(int id) => (await _baseRepository.SelectAsync(id))!;    
 
     public async Task<TEntity> UpdateAsync(TEntity entity)

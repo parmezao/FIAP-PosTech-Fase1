@@ -19,6 +19,12 @@ public static class ServicesExtensions
         return services;
     }
 
+    public static IServiceCollection AddMapping(this IServiceCollection services)
+    {
+        services.AddAutoMapper(typeof(Program));
+        return services;
+    }
+
     public static IServiceCollection AddDbConnection(this IServiceCollection services, WebApplicationBuilder builder)
     {
         services.AddDbContext<SqlServerDbContext>(options =>

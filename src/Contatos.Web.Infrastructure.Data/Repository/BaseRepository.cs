@@ -8,7 +8,7 @@ namespace Contatos.Web.Infrastructure.Data.Repository;
 public class BaseRepository<TEntity>(SqlServerDbContext context) 
     : IBaseRepository<TEntity> where TEntity : BaseEntity
 {
-    protected readonly SqlServerDbContext _context = context;
+    private readonly SqlServerDbContext _context = context;
 
     public async Task DeleteAsync(int id)
     {
@@ -25,6 +25,9 @@ public class BaseRepository<TEntity>(SqlServerDbContext context)
     public async Task<IList<TEntity>> SelectAllAsync() => await _context.Set<TEntity>().ToListAsync();
                   
     public async Task<TEntity?> SelectAsync(int id) => await _context.Set<TEntity>().FindAsync(id);
+    
+    public async Task<IEnumerable<TEntity>> FilterAsync(Func<TEntity, bool> predicate) =>
+        await Task.FromResult(_context.Set<TEntity>().Where(predicate));
 
     public async Task UpdateAsync(TEntity entity)
     {

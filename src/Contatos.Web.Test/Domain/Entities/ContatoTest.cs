@@ -96,7 +96,6 @@ public class ContatoTest
         // Assert
         Assert.Equal(valorEsperado, valorAtual);
     }
-
     #endregion
 
     #region Propriedade "Telefone"
@@ -165,6 +164,59 @@ public class ContatoTest
         // Assert
         Assert.True(valorEsperado);
     }
+
+    #endregion
+
+    #region Propriedade "DDD"
+    [Fact(DisplayName = "DDD Deve falhar quando for zero")]
+    [Trait("Category", "DDD")]
+    public void DDD_DeveFalhar_QuandoForZero()
+    {
+        // Arrange        
+        const int valorEsperado = 0;
+
+        // Act
+        var contato = new Contato();
+        var valorAtual = contato.DDD;
+
+        // Assert
+        Assert.Equal(valorEsperado, valorAtual);
+    }    
+
+    [Fact(DisplayName = "DDD Deve Falhar Quando Estiver Abaixo Da Qtde Minima De Caracteres")]
+    [Trait("Category", "DDD")]
+    public void DDD_DeveFalhar_QuandoEstiverAbaixoDaQtdeMinimaDeCaracteres()
+    {
+        // Arrange        
+        const int qtdEsperada = 1;
+
+        // Act
+        var contato = new Contato();
+        contato.DDD = 2;
+        
+        var qtdAtual = contato.DDD.ToString().Length;
+
+        // Assert
+        Assert.True(qtdAtual <= qtdEsperada);
+    }    
+
+    [Fact(DisplayName = "DDD Deve Falhar Quando Estiver Acima Da Qtde Máxima De Caracteres")]
+    [Trait("Category", "DDD")]
+    public void DDD_DeveFalhar_QuandoEstiverAcimaDaQtdeMaximaDeCaracteres()
+    {
+        // Arrange        
+        const int qtdEsperada = 3;
+
+        // Act
+        var contato = new Contato();
+        contato.DDD = 222;
+        
+        var qtdAtual = contato.DDD.ToString().Length;
+
+        // Assert
+        Assert.True(qtdAtual >= qtdEsperada);
+    }    
+
 
     #endregion
 }

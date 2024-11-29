@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B7DECE93
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contatos.Web.Tests", "Contatos.Web.Test\Contatos.Web.Tests.csproj", "{0328FD66-E2F2-4271-8F41-68E70F8B25B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contatos.Web.Shared", "Contatos.Web.Shared\Contatos.Web.Shared.csproj", "{52BE0650-7560-46AD-A9EE-804903D7A76C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{0328FD66-E2F2-4271-8F41-68E70F8B25B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0328FD66-E2F2-4271-8F41-68E70F8B25B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0328FD66-E2F2-4271-8F41-68E70F8B25B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52BE0650-7560-46AD-A9EE-804903D7A76C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52BE0650-7560-46AD-A9EE-804903D7A76C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52BE0650-7560-46AD-A9EE-804903D7A76C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52BE0650-7560-46AD-A9EE-804903D7A76C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +78,7 @@ Global
 		{3D74A8E8-F1B9-48C9-B037-A3A07B9B94BF} = {177CE7D3-122B-4FEA-8DCF-4CF4D0369D3C}
 		{1CFC78C2-362B-4199-BBE7-E1A4A6FBD8DD} = {26A6494D-B25A-474D-991D-4A01A1F8E5F9}
 		{0328FD66-E2F2-4271-8F41-68E70F8B25B0} = {B7DECE93-F616-409D-A6BC-4D3A89082825}
+		{52BE0650-7560-46AD-A9EE-804903D7A76C} = {0BA86354-F08F-4927-A6C7-EDAAB352892B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F6366B91-4EC1-4F65-B213-395DA5DC90DE}
