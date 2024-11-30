@@ -1,4 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Text.Json;
+using AutoMapper;
+using Contatos.Web.Application.Extensions;
+using Contatos.Web.Application.Helpers;
 using Contatos.Web.Domain.Entities;
 using Contatos.Web.Domain.Interfaces;
 using Contatos.Web.Service.Validators;
@@ -36,13 +39,20 @@ public class ContatoController(IBaseService<Contato> baseService, IMapper mapper
     /// </summary>
     /// <returns>Retorna a lista de objetos do tipo ContatoDto</returns>
     [HttpGet]
-    public async Task<ActionResult<ResponseModel>> GetAll()
+    public async Task<ActionResult<ResponseModel>> GetAll([FromQuery] PaginationParameters paginationParameters)
     {
         var responseModel = new ResponseModel();
 
         var contatos = await _baseService.GetAllAsync();
         var contatosDto = _mapper.Map<List<ContatoDto>>(contatos);
-        return Ok(responseModel.Result(StatusCodes.Status200OK, "OK", contatosDto));
+        
+        var pagedResult = contatosDto
+            .AsQueryable()
+            .ToPagedResult(paginationParameters.PageNumber, paginationParameters.PageSize);
+        Response.Headers.Append("X-Total-Count", pagedResult.TotalItems.ToString());
+        Response.Headers.Append("X-Total-Pages", pagedResult.TotalPages.ToString());
+        
+        return Ok(responseModel.Result(StatusCodes.Status200OK, "OK", pagedResult));
     }
 
     /// <summary>
@@ -61,18 +71,26 @@ public class ContatoController(IBaseService<Contato> baseService, IMapper mapper
     }
 
     /// <summary>
-    /// Endpoint utilizado para localizar o Contato de acordo com o DDD informado
+    /// Endpoint utilizado para filtrar os Contatos de acordo com o DDD informado
     /// </summary>
     /// <param name="ddd">DDD do objeto Contato. Necessário informar para localizar o Contato</param>
     /// <returns>Retorna o objeto do tipo Contato</returns>
     [HttpGet, Route("ddd/{ddd:int}")]
-    public async Task<ActionResult<ResponseModel>> GetByDDD(int ddd)
+    public async Task<ActionResult<ResponseModel>> GetByDdd(int ddd, 
+        [FromQuery] PaginationParameters paginationParameters)
     {
         var responseModel = new ResponseModel();
         
         var contatosDdd = await _baseService.FilterAsync(c => c.DDD == ddd);
         var contatosDddDto = _mapper.Map<List<ContatoDto>>(contatosDdd);
-        return Ok(responseModel.Result(StatusCodes.Status200OK, "OK", contatosDddDto));
+        
+        var pagedResult = contatosDddDto
+            .AsQueryable()
+            .ToPagedResult(paginationParameters.PageNumber, paginationParameters.PageSize);
+        Response.Headers.Append("X-Total-Count", pagedResult.TotalItems.ToString());
+        Response.Headers.Append("X-Total-Pages", pagedResult.TotalPages.ToString());
+        
+        return Ok(responseModel.Result(StatusCodes.Status200OK, "OK", pagedResult));
     }
 
     /// <summary>
