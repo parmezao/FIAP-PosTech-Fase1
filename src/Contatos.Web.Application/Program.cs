@@ -3,6 +3,10 @@ using Contatos.Web.Service.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
+#region Adiciona Logging
+builder.Logging.ClearProviders().AddConsole();
+#endregion
+
 #region Configura serviço de Controllers e Routes
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 {
