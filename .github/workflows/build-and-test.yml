@@ -20,6 +20,21 @@ jobs:
           matrix:
             os: [ubuntu-latest]
     
+        services:
+          sqlserver:
+            image: mcr.microsoft.com/mssql/server:2022-latest
+            ports:
+              - 1433:1433
+            env:
+              ACCEPT_EULA: Y
+              SA_PASSWORD: PkjRej8@30
+            options: >-
+              --health-cmd "wget --spider -q http://localhost:1433 || exit 1"
+              --health-interval 10s
+              --health-timeout 5s
+              --health-retries 3
+              --name sqlserver
+
         steps:
         - uses: actions/checkout@v4
         - name: Setup .NET Core
@@ -30,6 +45,13 @@ jobs:
         - name: Install dependencies
           run: dotnet restore
           working-directory: ./src
+
+        - name: Aguardar SQL Server
+          run: sleep 30
+
+        - name: Executar Migrations
+          run: |
+            dotnet ef database update --connection "Server=localhost;Database=TestDB;User Id=sa;Password=PkjRej8@30;"
           
         - name: Build
           run: dotnet build --configuration Release --no-restore

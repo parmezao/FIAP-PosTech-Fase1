@@ -4,13 +4,9 @@ using System.Net.Http.Json;
 using Contatos.Web.Domain.Entities;
 using System.Net;
 using System.Text.RegularExpressions;
-using Contatos.Web.Domain.ValueObjects;
 using FluentAssertions;
 using Contatos.Web.Tests.Application.Api.Abstractions;
 using Contatos.Web.Shared.DTO;
-using System.Collections;
-using Microsoft.AspNetCore.Mvc;
-using Contatos.Web.Service.Validators;
 
 namespace Contatos.Web.Tests.Application.Api;
 
@@ -142,7 +138,7 @@ public class ContatoControllerTest : BaseFunctionalTests
         content.Should().BeNullOrEmpty();
     }
 
-    [Fact(DisplayName = "Deve retornar menagem de n„o localizado ao tentar atualizar um contato inexistente")]
+    [Fact(DisplayName = "Deve retornar menagem de n√£o localizado ao tentar atualizar um contato inexistente")]
     [Trait("Functional", "ContatoController")]
     public async Task Should_Return_ErrorToUpdateContactWhenNotExists()
     {
@@ -165,13 +161,13 @@ public class ContatoControllerTest : BaseFunctionalTests
 
         var notFoundError = JsonSerializer.Deserialize<ResponseModel>(content, jsonOptions)!;
         notFoundError.Should().NotBeNull();
-        notFoundError.Message.Should().Be("N„o Encontrado");
+        notFoundError.Message.Should().Be("N√£o Encontrado");
     }
 
-    [Theory(DisplayName = "Deve retornar erro ao tentar atualizar um contato com um e-mail inv·lido")]
+    [Theory(DisplayName = "Deve retornar erro ao tentar atualizar um contato com um e-mail inv√°lido")]
     [Trait("Functional", "ContatoController")]
-    [InlineData("john.emailinvalido.com", "Falha na ValidaÁ„o")]
-    [InlineData($"emailcommaisdoquesessentacaracteres@dominiomaiordoqueesperado.com", "Falha na ValidaÁ„o")]
+    [InlineData("john.emailinvalido.com", "Falha na Valida√ß√£o")]
+    [InlineData($"emailcommaisdoquesessentacaracteres@dominiomaiordoqueesperado.com", "Falha na Valida√ß√£o")]
     public async Task Should_Return_ErrorToUpdateContactWhenEmailIsInvalid(string email, string expectedErrorMessage)
     {
         //Arrange
