@@ -49,9 +49,13 @@ jobs:
         - name: Aguardar SQL Server
           run: sleep 30
 
+        - name: Configurar banco de dados
+          run: |
+            sqlcmd -S localhost -U sa -P PkjRej8@30 -Q "CREATE DATABASE ContatosDB;"
+
         - name: Executar Migrations
           run: |
-            dotnet ef database update --connection "Server=localhost;Database=TestDB;User Id=sa;Password=PkjRej8@30;"
+            dotnet ef database update --connection "Server=localhost;Database=ContatosDB;User Id=sa;Password=PkjRej8@30;"
           
         - name: Build
           run: dotnet build --configuration Release --no-restore
