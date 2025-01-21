@@ -1,5 +1,4 @@
 ﻿using System.Net.Mime;
-using System.Text.Json;
 using AutoMapper;
 using Contatos.Web.Application.Extensions;
 using Contatos.Web.Application.Helpers;
@@ -8,6 +7,7 @@ using Contatos.Web.Domain.Interfaces;
 using Contatos.Web.Service.Validators;
 using Contatos.Web.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Prometheus;
 
 namespace Contatos.Web.Application.Controllers;
 
@@ -20,6 +20,8 @@ public class ContatoController(
     private readonly IMapper _mapper = mapper;
     private readonly ILogger<ContatoController> _logger = logger;
 
+    private static readonly Counter ContatoCounter = Metrics.CreateCounter("create_contact_counter", "Contador de requisições para a criação de um novo contato");
+
     /// <summary>
     /// Endpoint utilizado para cadastrar um novo Contato
     /// </summary>
@@ -31,13 +33,16 @@ public class ContatoController(
     [ProducesResponseType<ContatoDto>(StatusCodes.Status201Created)]
     [ProducesResponseType<ContatoDto>(StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<ResponseModel>> Create(ContatoDto contatoDto)
-    {
+    {   
         var responseModel = new ResponseModel();
 
         try
         {
             var contato = _mapper.Map<Contato>(contatoDto);
             var result = await _baseService.AddAsync(contato);
+
+            ContatoCounter.Inc(); // Incrementa o contador de requisições para a criação de um novo contato
+
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, 
                 responseModel.Result(StatusCodes.Status201Created, "Criado", result));
         }
@@ -154,6 +159,7 @@ public class ContatoController(
     /// <returns>Retorna o objeto Contato informado com o Id preenchido</returns>
     [HttpPut("{id:int}")]
     [ValidateModel]
+    [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType<ContatoDto>(StatusCodes.Status400BadRequest)]
     [ProducesResponseType<ContatoDto>(StatusCodes.Status204NoContent)]
     [ProducesResponseType<ContatoDto>(StatusCodes.Status404NotFound)]

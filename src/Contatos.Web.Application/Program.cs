@@ -1,5 +1,6 @@
 using Contatos.Web.Application.Extensions;
 using Contatos.Web.Service.Validators;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +46,11 @@ var app = builder.Build();
 app.ApplyMigrations();
 #endregion
 
+#region Adiciona o endpoint de métricas
+app.UseMetricServer();
+app.UseHttpMetrics(); // Coleta métricas de requisições HTTP automaticamente
+#endregion
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -57,3 +63,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program;
