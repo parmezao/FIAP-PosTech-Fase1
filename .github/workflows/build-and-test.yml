@@ -42,12 +42,6 @@ jobs:
           run: dotnet restore
           working-directory: ./src
 
-        - name: Start SQL Server
-          run: |
-            docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=PkjRej8@30" \
-            -p 1433:1433 --memory=4g --name sqlserver \
-            mcr.microsoft.com/mssql/server:2019-latest
-
         - name: Wait for SQL Server to be ready
           run: |
             until /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P PkjRej8@30 -Q "SELECT 1"; do
