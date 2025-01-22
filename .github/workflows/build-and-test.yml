@@ -42,14 +42,11 @@ jobs:
         - name: Install dependencies
           run: dotnet restore
           working-directory: ./src
-
-        - name: Apply Migrations
-          run: dotnet ef database update --project src/Contatos.Web.Infrastructure.Data/Contatos.Web.Infrastructure.Data.csproj
           
         - name: Build
           run: dotnet build --configuration Release --no-restore
-          working-directory: ./src
-        
-        - name: Test
-          run: dotnet test --no-restore --verbosity normal
-          working-directory: ./src
+          working-directory: ./src       
+
+        - name: Run Unit and Integration Tests
+          run: dotnet test ./src/Contatos.Web.Test/Contatos.Web.Tests.csproj --configuration Release --no-build --logger trx --verbosity normal
+
