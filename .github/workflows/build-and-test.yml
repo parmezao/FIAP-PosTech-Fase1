@@ -20,6 +20,20 @@ jobs:
           matrix:
             os: [ubuntu-latest]  
 
+        services:
+          sqlserver:
+            image: mcr.microsoft.com/mssql/server:2019-latest
+            ports:
+              - 1433:1433
+            env:
+              ACCEPT_EULA: "Y"
+              SA_PASSWORD: "PkjRej8@30"
+            options: >-
+              --health-cmd "echo 'SELECT 1' | /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P PkjRej8@30" 
+              --health-interval 10s 
+              --health-timeout 5s 
+              --health-retries 3 
+
         steps:
         - uses: actions/checkout@v4
         - name: Setup .NET Core
@@ -31,13 +45,7 @@ jobs:
           run: dotnet restore
           working-directory: ./src
 
-        - name: Start SQL Server
-          run: |
-            docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=PkjRej8@30" \
-            -p 1433:1433 --memory=4g --name sqlserver \
-            mcr.microsoft.com/mssql/server:2019-latest
-
-        - name: Wait for SQL Server to be ready
+        - name: Wait for SQL Server
           run: |
             until /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P PkjRej8@30 -Q "SELECT 1"; do
               echo "Waiting for SQL Server to start..."
