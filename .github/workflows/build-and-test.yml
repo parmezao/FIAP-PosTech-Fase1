@@ -18,18 +18,7 @@ jobs:
         runs-on: ${{ matrix.os }}
         strategy:
           matrix:
-            os: [ubuntu-latest]
-    
-        services:
-          sqlserver:
-            image: mcr.microsoft.com/mssql/server:2019-latest
-            ports:
-              - 1433:1433
-            env:
-              ACCEPT_EULA: Y
-              MSSQL_SA_PASSWORD: PkjRej8@30
-            volumes:
-              - data:/var/opt/mssql    
+            os: [ubuntu-latest]  
 
         steps:
         - uses: actions/checkout@v4
@@ -41,6 +30,12 @@ jobs:
         - name: Install dependencies
           run: dotnet restore
           working-directory: ./src
+
+        - name: Start SQL Server
+          run: |
+            docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=PkjRej8@30" \
+            -p 1433:1433 --memory=4g --name sqlserver \
+            mcr.microsoft.com/mssql/server:2019-latest
 
         - name: Wait for SQL Server to be ready
           run: |
