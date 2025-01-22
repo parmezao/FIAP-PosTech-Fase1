@@ -43,20 +43,6 @@ jobs:
           run: dotnet restore
           working-directory: ./src
 
-        - name: Wait for SQL Server to be ready
-          run: |
-            echo "Waiting for SQL Server to be fully operational..."
-            until /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P PkjRej8@30 -Q "SELECT @@VERSION" > /dev/null 2>&1
-            do
-            echo "SQL Server is still initializing. Waiting..."
-            sleep 5
-            done
-            echo "SQL Server is now operational."
-
-        - name: Initialize SQL Server
-          run: |
-            /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P PkjRej8@30 -i ./scripts/init-db.sql
-
         - name: Apply Migrations
           run: dotnet ef database update --project src/Contatos.Web.Infrastructure.Data/Contatos.Web.Infrastructure.Data.csproj
           
