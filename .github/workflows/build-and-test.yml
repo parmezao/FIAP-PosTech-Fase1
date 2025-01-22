@@ -23,6 +23,9 @@ jobs:
         services:
           sqlserver:
             image: mcr.microsoft.com/mssql/server:2022-latest
+            volumes:
+              - sql_data:/var/opt/mssql
+            options: --memory=4g
             ports:
               - 1434:1433
             env:
