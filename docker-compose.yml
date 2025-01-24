@@ -1,4 +1,38 @@
+
+volumes:
+  sqlserver_data:
+
 services: 
+  api01: &api
+    hostname: api01
+    build:
+      context: .
+      dockerfile: ./src/Contatos.Web.Application/Dockerfile        
+    restart: always
+    environment:
+      ASPNETCORE_ENVIRONMENT: Docker
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=PkjRej8@30
+    ports:
+      - 1433:1433
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P PkjRej8@30 -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      retries: 10
+      start_period: 10s
+      timeout: 3s
+
   prometheus:
     image: prom/prometheus
     container_name: prometheus

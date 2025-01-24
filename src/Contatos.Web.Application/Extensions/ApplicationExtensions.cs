@@ -9,7 +9,7 @@ public static class ApplicationExtensions
     {
         using var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
         var context = serviceScope.ServiceProvider.GetService<SqlServerDbContext>();
-        //context!.Database.Migrate();
+        context!.Database.Migrate();
 
         return app;
     }
