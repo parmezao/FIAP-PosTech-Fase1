@@ -49,10 +49,15 @@ jobs:
           
         - name: Build
           run: dotnet build --configuration Release --no-restore
-          working-directory: ./src       
+          working-directory: ./src    
+          
+        - name: Run Migrations
+          env:
+            ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=ContatosDB;User=sa;Password=PkjRej8@30"
+          run: dotnet ef database update          
 
         - name: Run Unit and Integration Tests
           env: 
-            ConnectionStrings__DefaultConnection: "Server=localhost,1433;Database=ContatosDB;User=sa;Password=PkjRej8@30"
+            ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=ContatosDB;User=sa;Password=PkjRej8@30"
           run: dotnet test ./src/Contatos.Web.Test/Contatos.Web.Tests.csproj --configuration Release --no-build --logger trx --verbosity normal
 
