@@ -60,7 +60,7 @@ jobs:
         - name: Run Migrations
           env:
             ConnectionStrings__DefaultConnection: "Server=localhost,1433;Database=ContatosDB;User=sa;Password=PkjRej8@30"
-          run: dotnet ef database update --project ./src/Contatos.Web.Infrastructure.Data/Contatos.Web.Infrastructure.Data.csproj --startup-project ./src/Contatos.Web.Application/Contatos.Web.Application.csproj      
+          run: dotnet ef database update --connection "Server=sqlserver;Database=ContatosDB;User=sa;Password=PkjRej8@30" --project ./src/Contatos.Web.Infrastructure.Data/Contatos.Web.Infrastructure.Data.csproj --startup-project ./src/Contatos.Web.Application/Contatos.Web.Application.csproj      
 
         - name: Run Unit and Integration Tests
           env: 
