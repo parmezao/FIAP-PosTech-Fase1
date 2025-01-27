@@ -17,24 +17,7 @@ jobs:
         runs-on: ${{ matrix.os }}
         strategy:
           matrix:
-            os: [ubuntu-latest]  
-
-        # services:
-        #   sqlserver:
-        #     image: mcr.microsoft.com/mssql/server:2022-latest
-        #     volumes:
-        #       - sql_data:/var/opt/mssql
-        #     options: >-
-        #         --memory=4g
-        #         --health-cmd "exit 0"
-        #         --health-interval 10s
-        #         --health-timeout 5s
-        #         --health-retries 3   
-        #     ports:
-        #       - 1434:1433
-        #     env:
-        #       ACCEPT_EULA: "Y"
-        #       SA_PASSWORD: "PkjRej8@30"             
+            os: [ubuntu-latest]           
 
         steps:
         - uses: actions/checkout@v4
@@ -42,12 +25,6 @@ jobs:
           uses: actions/setup-dotnet@v4
           with:
             dotnet-version: ${{ env.DOTNET_VERSION }}
-    
-        # - name: Install EF Core CLI Tools
-        #   run: dotnet tool install --global dotnet-ef
-    
-        # - name: Add .NET tools to PATH
-        #   run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
 
         - name: Install dependencies
           run: dotnet restore
@@ -57,11 +34,6 @@ jobs:
           run: dotnet build --configuration Release --no-restore
           working-directory: ./src    
           
-        # - name: Run Migrations
-        #   env:
-        #     ConnectionStrings__DefaultConnection: "Server=localhost,1433;Database=ContatosDB;User=sa;Password=PkjRej8@30"
-        #   run: dotnet ef database update --connection "Server=localhost,1433;Database=ContatosDB;User=sa;Password=PkjRej8@30" --project ./src/Contatos.Web.Infrastructure.Data/Contatos.Web.Infrastructure.Data.csproj --startup-project ./src/Contatos.Web.Application/Contatos.Web.Application.csproj      
-
         - name: Run Unit and Integration Tests
           run: dotnet test ./src/Contatos.Web.Test/Contatos.Web.Tests.csproj --configuration Release --no-build --logger trx --verbosity normal
 

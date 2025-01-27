@@ -43,7 +43,7 @@ builder.Services.AddDocs();
 var app = builder.Build();
 
 #region Aplica as Migrações (Migrations)
-//app.ApplyMigrations();
+if (!WasInvoked) app.ApplyMigrations();
 #endregion
 
 #region Adiciona o endpoint de métricas
@@ -64,4 +64,13 @@ app.MapControllers();
 
 app.Run();
 
-public partial class Program;
+public partial class Program
+{
+    public static bool WasInvoked { get; set; }
+
+    public static void Main(string[] args)
+    {
+        WasInvoked = true; // Aplicação foi inicializada através dos testes
+    }
+
+}

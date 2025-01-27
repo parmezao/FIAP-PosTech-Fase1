@@ -16,6 +16,7 @@ public class FunctionalTestWebAppFactory : WebApplicationFactory<Program>, IAsyn
         {
             var serviceProvider = services.BuildServiceProvider();
             var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+            Program.WasInvoked = true; // Indica que a classe Program foi invocada para que as migrações não sejam aplicadas no contexto de testes (InMemoryDatabase)
 
             services.Remove(services.Single(a => typeof(DbContextOptions<SqlServerDbContext>) == a.ServiceType));
             // services.AddDbContext<SqlServerDbContext>(options => options
@@ -23,16 +24,7 @@ public class FunctionalTestWebAppFactory : WebApplicationFactory<Program>, IAsyn
 
             services.AddDbContext<SqlServerDbContext>(options => options
               .UseInMemoryDatabase("TestDb"));
-
-            //RunScriptDatabase(services);
         });
-    }
-
-    private static void RunScriptDatabase(IServiceCollection services)
-    {
-        var serviceProvider = services.BuildServiceProvider();
-        var dataContext = serviceProvider.GetRequiredService<SqlServerDbContext>();
-        dataContext.Database.EnsureCreated();
     }
 
     public async Task InitializeAsync()
