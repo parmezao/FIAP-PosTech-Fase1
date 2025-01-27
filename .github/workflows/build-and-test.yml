@@ -24,12 +24,17 @@ jobs:
             image: mcr.microsoft.com/mssql/server:2022-latest
             volumes:
               - sql_data:/var/opt/mssql
-            options: --memory=4g
+            options: >-
+                --memory=4g
+                --health-cmd "exit 0"
+                --health-interval 10s
+                --health-timeout 5s
+                --health-retries 3   
             ports:
               - 1434:1433
             env:
               ACCEPT_EULA: "Y"
-              SA_PASSWORD: "PkjRej8@30"
+              SA_PASSWORD: "PkjRej8@30"             
 
         steps:
         - uses: actions/checkout@v4
@@ -48,6 +53,6 @@ jobs:
 
         - name: Run Unit and Integration Tests
           env: 
-            ASPNETCORE_ENVIRONMENT: Development # Configurando o ambiente para 'Development'
+            ConnectionStrings__DefaultConnection: "Server=localhost,1433;Database=ContatosDB;User=sa;Password=PkjRej8@30"
           run: dotnet test ./src/Contatos.Web.Test/Contatos.Web.Tests.csproj --configuration Release --no-build --logger trx --verbosity normal
 
