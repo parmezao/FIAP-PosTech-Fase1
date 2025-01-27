@@ -3,4 +3,4 @@ global:
 scrape_configs:
   - job_name: 'api01-read-prometheus'
     static_configs:
-    - targets: ['localhost:5000']
+    - targets: ['localhost:8080', 'docker.host.internal:8080']

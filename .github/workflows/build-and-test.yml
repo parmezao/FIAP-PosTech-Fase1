@@ -1,4 +1,4 @@
-name: build and test
+name: CI Pipeline
 
 on:
     push:
@@ -7,9 +7,8 @@ on:
         paths: 
         - '**.cs'
         - '**.csproj'
-
 env:
-    DOTNET_VERSION: '8.0.404'        
+    DOTNET_VERSION: "8.x"       
 
 jobs:
     build-and-test:
@@ -48,5 +47,7 @@ jobs:
           working-directory: ./src       
 
         - name: Run Unit and Integration Tests
+          env: 
+            ASPNETCORE_ENVIRONMENT: Development # Configurando o ambiente para 'Development'
           run: dotnet test ./src/Contatos.Web.Test/Contatos.Web.Tests.csproj --configuration Release --no-build --logger trx --verbosity normal
 
