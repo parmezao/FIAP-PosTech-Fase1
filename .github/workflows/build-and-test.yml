@@ -47,7 +47,7 @@ jobs:
           run: dotnet tool install --global dotnet-ef
     
         - name: Add .NET tools to PATH
-          run: echo "::add-path::$(dotnet --tool-path)"
+          run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
 
         - name: Install dependencies
           run: dotnet restore
