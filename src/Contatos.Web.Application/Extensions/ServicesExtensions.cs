@@ -45,7 +45,7 @@ public static class ServicesExtensions
             {
                 Version = "v1",
                 Title = "Contatos",
-                Description = "API de Contatos Regionais - FIAP Fase 1"
+                Description = "API de Contatos Regionais - FIAP Fase 1 e Fase 2"
             });
         });            
 
