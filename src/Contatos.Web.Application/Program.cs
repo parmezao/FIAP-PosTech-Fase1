@@ -43,7 +43,7 @@ builder.Services.AddDocs();
 var app = builder.Build();
 
 #region Aplica as Migrações (Migrations)
-app.ApplyMigrations();
+//app.ApplyMigrations();
 #endregion
 
 #region Adiciona o endpoint de métricas
