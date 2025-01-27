@@ -52,7 +52,7 @@ jobs:
         - name: Install dependencies
           run: dotnet restore
           working-directory: ./src
-          
+
         - name: Build
           run: dotnet build --configuration Release --no-restore
           working-directory: ./src    
@@ -60,7 +60,7 @@ jobs:
         - name: Run Migrations
           env:
             ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=ContatosDB;User=sa;Password=PkjRej8@30"
-          run: dotnet ef database update --project ./src/Contatos.Web.Test/Contatos.Web.Tests.csproj --startup-project ./src/Contatos.Web.Application/Contatos.Web.Application.csproj      
+          run: dotnet ef database update --project ./src/Contatos.Web.Infrastructure.Data/Contatos.Web.Infrastructure.Data.csproj --startup-project ./src/Contatos.Web.Application/Contatos.Web.Application.csproj      
 
         - name: Run Unit and Integration Tests
           env: 
