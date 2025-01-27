@@ -66,11 +66,5 @@ app.Run();
 
 public partial class Program
 {
-    public static bool WasInvoked { get; set; }
-
-    public static void Main(string[] args)
-    {
-        WasInvoked = true; // Aplicação foi inicializada através dos testes
-    }
-
+    public static bool WasInvoked { private get; set; }
 }
