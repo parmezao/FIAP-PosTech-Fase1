@@ -18,11 +18,11 @@ public class FunctionalTestWebAppFactory : WebApplicationFactory<Program>, IAsyn
             var configuration = serviceProvider.GetRequiredService<IConfiguration>();
 
             services.Remove(services.Single(a => typeof(DbContextOptions<SqlServerDbContext>) == a.ServiceType));
-            services.AddDbContext<SqlServerDbContext>(options => options
-                .UseSqlServer(configuration.GetConnectionString("DefaultConnection")!));
+            // services.AddDbContext<SqlServerDbContext>(options => options
+            //     .UseSqlServer(configuration.GetConnectionString("DefaultConnection")!));
 
-            //services.AddDbContext<SqlServerDbContext>(options => options
-            //   .UseInMemoryDatabase("TestDb"));
+            services.AddDbContext<SqlServerDbContext>(options => options
+              .UseInMemoryDatabase("TestDb"));
 
             //RunScriptDatabase(services);
         });
