@@ -19,8 +19,6 @@ public class ContatoController(
     private readonly IMapper _mapper = mapper;
     private readonly ILogger<ContatoController> _logger = logger;
 
-    private static readonly Counter ContatoCounter = Metrics.CreateCounter("create_contact_counter", "Contador de requisições para a criação de um novo contato");
-
     /// <summary>
     /// Endpoint utilizado para cadastrar um novo Contato
     /// </summary>
@@ -38,8 +36,6 @@ public class ContatoController(
         {
             var contato = _mapper.Map<Contato>(contatoDto);
             var result = await _baseService.AddAsync(contato);
-
-            ContatoCounter.Inc(); // Incrementa o contador de requisições para a criação de um novo contato
 
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, 
                 responseModel.Result(StatusCodes.Status201Created, "Criado", result));

@@ -18,6 +18,7 @@ public static class ServicesExtensions
         services.AddScoped<IBaseService<Contato>, BaseService<Contato>>();
         
         services.AddHostedService<CpuMetricsCollector>();
+        services.AddHostedService<MemoryMetricsCollector>();        
 
         return services;
     }
