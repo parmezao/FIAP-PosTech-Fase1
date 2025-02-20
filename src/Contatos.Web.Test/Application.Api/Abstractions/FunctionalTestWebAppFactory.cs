@@ -24,6 +24,9 @@ public class FunctionalTestWebAppFactory : WebApplicationFactory<Program>, IAsyn
 
             services.AddDbContext<SqlServerDbContext>(options => options
               .UseInMemoryDatabase("TestDb"));
+
+            //services.AddDbContext<SqlServerDbContext>(options => options
+            //  .UseSqlite("DataSource=contatos.db"));
         });
     }
 

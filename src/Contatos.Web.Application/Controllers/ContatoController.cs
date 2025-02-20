@@ -1,5 +1,4 @@
-﻿using System.Net.Mime;
-using AutoMapper;
+﻿using AutoMapper;
 using Contatos.Web.Application.Extensions;
 using Contatos.Web.Application.Helpers;
 using Contatos.Web.Domain.Entities;
@@ -29,7 +28,6 @@ public class ContatoController(
     /// <returns>Retorna o objeto ContatoDto informado com o Id preenchido</returns>
     [HttpPost]
     [ValidateModel]
-    [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType<ContatoDto>(StatusCodes.Status201Created)]
     [ProducesResponseType<ContatoDto>(StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<ResponseModel>> Create(ContatoDto contatoDto)
@@ -159,7 +157,6 @@ public class ContatoController(
     /// <returns>Retorna o objeto Contato informado com o Id preenchido</returns>
     [HttpPut("{id:int}")]
     [ValidateModel]
-    [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType<ContatoDto>(StatusCodes.Status400BadRequest)]
     [ProducesResponseType<ContatoDto>(StatusCodes.Status204NoContent)]
     [ProducesResponseType<ContatoDto>(StatusCodes.Status404NotFound)]

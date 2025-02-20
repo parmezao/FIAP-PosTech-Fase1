@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Contatos.Web.Application.BackgroundServices;
 using Contatos.Web.Domain.Entities;
 using Contatos.Web.Domain.Interfaces;
 using Contatos.Web.Infrastructure.Data.Context;
@@ -10,11 +11,13 @@ using Microsoft.OpenApi.Models;
 namespace Contatos.Web.Application.Extensions;
 
 public static class ServicesExtensions
-{
+{   
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddScoped<IBaseRepository<Contato>, BaseRepository<Contato>>();
         services.AddScoped<IBaseService<Contato>, BaseService<Contato>>();
+        
+        services.AddHostedService<CpuMetricsCollector>();
 
         return services;
     }

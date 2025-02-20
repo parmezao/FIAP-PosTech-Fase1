@@ -1,6 +1,8 @@
 global:
   scrape_interval: 5s 
+  
 scrape_configs:
   - job_name: 'api01-read-prometheus'
+    metrics_path: '/metrics'    
     static_configs:
-    - targets: ['localhost:8080', 'docker.host.internal:8080']
+      - targets: ['host.docker.internal:5000'] # Endereço da API no Docker
