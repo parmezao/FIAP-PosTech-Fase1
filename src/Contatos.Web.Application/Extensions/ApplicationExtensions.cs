@@ -1,5 +1,7 @@
-﻿using Contatos.Web.Infrastructure.Data.Context;
+﻿using Contatos.Web.Application.Middlewares;
+using Contatos.Web.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
+using Prometheus;
 
 namespace Contatos.Web.Application.Extensions;
 
@@ -12,5 +14,14 @@ public static class ApplicationExtensions
         context!.Database.Migrate();
 
         return app;
+    }
+
+    public static IApplicationBuilder UseMetrics(this IApplicationBuilder builder) 
+    {
+        builder.UseMiddleware<RequestMetricsMiddleware>(); // Adiciona o monitoramento de latência
+        builder.UseMetricServer();
+        builder.UseHttpMetrics(); // Coleta métricas de requisições HTTP automaticamente
+
+        return builder;
     }
 }
