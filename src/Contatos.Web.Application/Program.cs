@@ -1,7 +1,8 @@
 using Contatos.Web.Application.Extensions;
-using Contatos.Web.Application.Middlewares;
 using Contatos.Web.Service.Validators;
-using Prometheus;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,31 @@ builder.Services.AddDbConnection(builder);
 
 #region Adiciona a documentação (Swagger)
 builder.Services.AddDocs();
+#endregion
+
+#region Adiciona a Autenticação
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json")
+    .Build();
+
+var key = Encoding.ASCII.GetBytes(configuration.GetValue<string>("SecretJWT") ?? string.Empty);
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(j =>
+{
+    j.RequireHttpsMetadata = false;
+    j.SaveToken = true;
+    j.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
 #endregion
 
 var app = builder.Build();

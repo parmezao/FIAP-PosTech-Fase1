@@ -1,5 +1,4 @@
 ﻿using Contatos.Web.Domain.Entities;
-using FluentValidation;
 
 namespace Contatos.Web.Domain.Interfaces;
 

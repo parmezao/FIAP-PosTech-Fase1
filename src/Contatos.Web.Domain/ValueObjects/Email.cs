@@ -1,7 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-
-namespace Contatos.Web.Domain.ValueObjects;
+﻿namespace Contatos.Web.Domain.ValueObjects;
 
 public class Email(string endereco)
 {

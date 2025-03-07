@@ -1,16 +1,16 @@
-using System.Diagnostics;
 using Prometheus;
+using System.Diagnostics;
 
 namespace Contatos.Web.Application.BackgroundServices;
 
 public class CpuMetricsCollector : BackgroundService
 {
     private readonly Gauge _cpuUsage = Metrics.CreateGauge("api_cpu_usage", "Uso de CPU da aplicação em porcentagem");
-    
+
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         Console.WriteLine("Iniciando coleta de métrica Uso de CPU...");
-        
+
         var process = Process.GetCurrentProcess();
         TimeSpan prevCpuTime = process.TotalProcessorTime;
         DateTime prevTime = DateTime.UtcNow;

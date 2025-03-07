@@ -16,7 +16,7 @@ public static class ApplicationExtensions
         return app;
     }
 
-    public static IApplicationBuilder UseMetrics(this IApplicationBuilder builder) 
+    public static IApplicationBuilder UseMetrics(this IApplicationBuilder builder)
     {
         builder.UseMiddleware<RequestMetricsMiddleware>(); // Adiciona o monitoramento de latência
         builder.UseMetricServer();

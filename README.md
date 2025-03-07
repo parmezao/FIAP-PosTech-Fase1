@@ -23,7 +23,12 @@ Este é um projeto .NET que utiliza Docker para facilitar o ambiente de desenvol
 ```
 Isso iniciará os contêineres Docker em segundo plano (-d para detached mode), incluindo a aplicação .NET e o banco de dados SQL Server.
 
-Acesse a aplicação em http://localhost:8080, ou http://localhost:8080/swagger para utilizar a interface do Swagger 
+Acesse a aplicação em http://localhost:8080, ou http://localhost:8080/swagger para utilizar a interface do Swagger
+
+Usuário e Senha para a geração de Token.
+
+- Usuário: admin
+- Senha: admin@123
 
 3. Parando a execução do projeto e removendo os containers
 

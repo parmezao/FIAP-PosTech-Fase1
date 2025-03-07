@@ -24,7 +24,7 @@ public class ContatoMap : IEntityTypeConfiguration<Contato>
                 .HasColumnName("Email")
                 .HasColumnType("varchar(60)");
         });
-                          
+
         builder.Property(x => x.Telefone)
                         .IsRequired()
                         .HasColumnName("Telefone")

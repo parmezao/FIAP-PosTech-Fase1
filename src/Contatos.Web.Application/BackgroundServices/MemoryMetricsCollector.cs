@@ -1,5 +1,5 @@
-using System.Diagnostics;
 using Prometheus;
+using System.Diagnostics;
 
 namespace Contatos.Web.Application.BackgroundServices;
 
@@ -16,7 +16,7 @@ public class MemoryMetricsCollector : BackgroundService
         {
             long memoryUsed = Process.GetCurrentProcess().WorkingSet64 / (1024 * 1024); // Convertendo para MB
             _memoryUsage.Set(memoryUsed);
-            
+
             await Task.Delay(5000, stoppingToken); // Atualiza a cada 5s
         }
     }

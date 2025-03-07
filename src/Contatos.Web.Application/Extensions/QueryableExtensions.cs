@@ -10,5 +10,5 @@ public static class QueryableExtensions
         var data = query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
 
         return new PagedResult<T>(data, totalItems, pageNumber, pageSize);
-    }    
+    }
 }

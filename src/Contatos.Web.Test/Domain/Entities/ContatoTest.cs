@@ -102,7 +102,7 @@ public class ContatoTest
     [Fact(DisplayName = "Telefone Deve Falhar Se Tiver Mais De 10 Caracteres")]
     [Trait("Category", "Telefone")]
     public void Telefone_DeveFalhar_SeTiverMaisDe10Caracteres()
-    {        
+    {
         const string telefoneMaiorQue10Caracteres = "98888776600";
 
         // Arrange
@@ -158,7 +158,7 @@ public class ContatoTest
         // Arrange
         var contato = new Contato();
         contato.Telefone = telefoneComCaractereAlfanumerico;
-        
+
         var valorEsperado = !Regex.IsMatch(contato.Telefone, "^[0-9]*$");
 
         // Assert
@@ -181,7 +181,7 @@ public class ContatoTest
 
         // Assert
         Assert.Equal(valorEsperado, valorAtual);
-    }    
+    }
 
     [Fact(DisplayName = "DDD Deve Falhar Quando Estiver Abaixo Da Qtde Minima De Caracteres")]
     [Trait("Category", "DDD")]
@@ -193,12 +193,12 @@ public class ContatoTest
         // Act
         var contato = new Contato();
         contato.DDD = 2;
-        
+
         var qtdAtual = contato.DDD.ToString().Length;
 
         // Assert
         Assert.True(qtdAtual <= qtdEsperada);
-    }    
+    }
 
     [Fact(DisplayName = "DDD Deve Falhar Quando Estiver Acima Da Qtde Máxima De Caracteres")]
     [Trait("Category", "DDD")]
@@ -210,12 +210,12 @@ public class ContatoTest
         // Act
         var contato = new Contato();
         contato.DDD = 222;
-        
+
         var qtdAtual = contato.DDD.ToString().Length;
 
         // Assert
         Assert.True(qtdAtual >= qtdEsperada);
-    }    
+    }
 
 
     #endregion

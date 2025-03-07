@@ -1,5 +1,4 @@
 ﻿using Contatos.Web.Domain.ValueObjects;
-using System.ComponentModel.DataAnnotations;
 
 namespace Contatos.Web.Domain.Entities;
 

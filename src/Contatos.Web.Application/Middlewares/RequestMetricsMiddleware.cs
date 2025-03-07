@@ -1,5 +1,5 @@
-using System.Diagnostics;
 using Prometheus;
+using System.Diagnostics;
 
 namespace Contatos.Web.Application.Middlewares;
 

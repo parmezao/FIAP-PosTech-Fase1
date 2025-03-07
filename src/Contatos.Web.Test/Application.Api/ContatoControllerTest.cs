@@ -1,12 +1,12 @@
 using Bogus;
-using System.Text.Json;
-using System.Net.Http.Json;
 using Contatos.Web.Domain.Entities;
-using System.Net;
-using System.Text.RegularExpressions;
-using FluentAssertions;
-using Contatos.Web.Tests.Application.Api.Abstractions;
 using Contatos.Web.Shared.DTO;
+using Contatos.Web.Tests.Application.Api.Abstractions;
+using FluentAssertions;
+using System.Net;
+using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace Contatos.Web.Tests.Application.Api;
 
@@ -23,7 +23,7 @@ public class ContatoControllerTest : BaseFunctionalTests
 
     private string validPhoneNumber => "999999999";
     private string validPhoneNumberToUpdate => "988888888";
-    private int validDddPhoneNumber => 11;    
+    private int validDddPhoneNumber => 11;
 
     private readonly JsonSerializerOptions jsonOptions = new JsonSerializerOptions
     {
@@ -49,14 +49,14 @@ public class ContatoControllerTest : BaseFunctionalTests
         //Assert
         response.EnsureSuccessStatusCode();
         response.StatusCode.Should().Be(HttpStatusCode.Created);
-        
+
         var content = await response.Content.ReadAsStringAsync();
         var contatoResponse = JsonSerializer.Deserialize<ResponseModel>(content, jsonOptions)!;
         contatoResponse.Should().NotBeNull();
 
         var contatoResponseData = JsonSerializer.Deserialize<Contato>(contatoResponse.Data!.ToString()!, jsonOptions)!;
         contatoResponseData?.Nome.Should().BeEquivalentTo(payload.Nome);
-        
+
         var formatedPhone = Regex.Replace(payload.Telefone, "[^0-9]+", "");
         contatoResponseData?.Telefone.Should().BeEquivalentTo(formatedPhone);
         contatoResponseData?.Email.Endereco.Should().BeEquivalentTo(payload.Email);

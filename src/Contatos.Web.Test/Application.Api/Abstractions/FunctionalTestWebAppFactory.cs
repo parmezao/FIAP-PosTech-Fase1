@@ -1,6 +1,5 @@
 using Contatos.Web.Infrastructure.Data.Context;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

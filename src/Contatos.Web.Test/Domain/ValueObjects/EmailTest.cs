@@ -14,7 +14,7 @@ public class EmailTest
         var valorEsperado = novoEmail;
 
         // Act
-        Contato contato = new() {Email = new Email(string.Empty)};
+        Contato contato = new() { Email = new Email(string.Empty) };
         contato.Email.ChangeEmail("emailanterior@email.com");
         var valorAtual = contato.Email.Endereco;
 
